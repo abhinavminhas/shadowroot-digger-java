@@ -1,0 +1,112 @@
+name: Code Coverage
+
+env:
+    SELENUM_HUB_TAG: "4.1.1"
+    CHROME_NODE_TAG_1: "95.0-chromedriver-95.0"
+    CHROME_NODE_TAG_2: "96.0-chromedriver-96.0"
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        java-version: [ '8' ]
+        
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Set up JDK ${{ matrix.java-version }}
+      uses: actions/setup-java@v2
+      with:
+        java-version: '${{ matrix.java-version }}'
+        distribution: 'adopt'
+    
+    - name: Build with Maven
+        run: mvn --batch-mode --update-snapshots verify -DskipTests=true
+
+    - name: Find And Replace Values (config.properties)
+      if: ${{ matrix.java-version == '8' }}
+      uses: datamonsters/replace-action@v2
+      with:
+        files: ${{ github.workspace }}/src/test/resources/config.properties
+        replacements: '__UseDocker__=true'
+    
+    - name: Find And Replace Values (Chrome Node Tag 1)
+      if: ${{ matrix.java-version == '8' }}
+      uses: datamonsters/replace-action@v2
+      with:
+        files: docker-compose.yml
+        replacements: '__CHROME-NODE-TAG__=${{ env.CHROME_NODE_TAG_1 }},__CHROME-NODE-TAG__=${{ env.CHROME_NODE_TAG_1 }}'
+
+    - name: Find And Replace Values (Selenium Hub Tag)
+      if: ${{ matrix.java-version == '8' }}
+      uses: datamonsters/replace-action@v2
+      with:
+        files: docker-compose.yml
+        replacements: '__SELENIUM-HUB-TAG__=${{ env.SELENUM_HUB_TAG }},__SELENIUM-HUB-TAG__=${{ env.SELENUM_HUB_TAG }}'
+      
+    - name: Create Selenium Grid (Chrome-ChromeDriver-v95)
+      run: docker-compose -f docker-compose.yml up -d
+    
+    - name: Sleep (10 Seconds)
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '10s'
+
+    - name: Test (Chrome-ChromeDriver-v95)
+      if: ${{ matrix.java-version == '8' }}
+      run: mvn test
+    
+    - name: Tear Down Selenium Grid (Chrome-ChromeDriver-v95)
+      run: |
+        docker-compose -f docker-compose.yml stop
+        docker-compose -f docker-compose.yml down
+    
+    - name: Upload Coverage To Codecov
+      uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        directory: target/site/jacoco/
+
+    - name: Find And Replace Values (Chrome Node Tag 2)
+      if: ${{ matrix.java-version == '8' }}
+      uses: datamonsters/replace-action@v2
+      with:
+        files: docker-compose.yml
+        replacements: '${{ env.CHROME_NODE_TAG_1 }}=${{ env.CHROME_NODE_TAG_2 }},${{ env.CHROME_NODE_TAG_1 }}=${{ env.CHROME_NODE_TAG_2 }}'
+      
+    - name: Create Selenium Grid (Chrome-ChromeDriver-v96)
+      run: docker-compose -f docker-compose.yml up -d
+
+    - name: Sleep (10 Seconds)
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '10s'
+        
+    - name: Test (Chrome-ChromeDriver-v96)
+      if: ${{ matrix.java-version == '8' }}
+      run: mvn test
+    
+    - name: Tear Down Selenium Grid (Chrome-ChromeDriver-v96)
+      run: |
+        docker-compose -f docker-compose.yml stop
+        docker-compose -f docker-compose.yml down
+
+    - name: Upload Coverage To Codecov
+      uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        directory: target/site/jacoco/
