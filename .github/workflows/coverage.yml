@@ -35,7 +35,7 @@ jobs:
         distribution: 'adopt'
     
     - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots verify -DskipTests=true
+      run: mvn --batch-mode --update-snapshots verify -DskipTests=true
 
     - name: Find And Replace Values (config.properties)
       if: ${{ matrix.java-version == '8' }}
