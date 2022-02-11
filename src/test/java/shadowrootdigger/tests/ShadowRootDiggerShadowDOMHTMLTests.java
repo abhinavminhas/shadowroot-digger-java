@@ -15,6 +15,9 @@ public class ShadowRootDiggerShadowDOMHTMLTests extends TestBase {
     private String _shadowRootEnclosedCheckbox = "input[type='checkbox']";
     private String _shadowRootEnclosedInputChooseFile = "input[type='file']";
     private String _notExistsShadowHostElement = "#non_host";
+    private String _nestedShadowHostElement = "#shadow_host > #nested_shadow_host";
+    private String _nestedShadowHostShadowContent = "div[id='nested_shadow_content']";
+    private String _notExistsNestedShadowHostElement = "#shadow_host > #shadow_content";
     
 	@Test(description = SHADOW_DOM_HTML_TESTS)
 	public void test_getShadowRootElement_ShadowDOMHTML_ShadowRootElementExists() {
@@ -35,6 +38,26 @@ public class ShadowRootDiggerShadowDOMHTMLTests extends TestBase {
         WebDriver.navigate().to(getTestFilePath());
         try {
             ShadowRootAssist.getShadowRootElement(WebDriver, _notExistsShadowHostElement, 20 , 2000);
+            Assert.fail("No Exception Thrown.");
+        }
+        catch (AssertionError ex) { throw ex; }
+        catch (WebDriverException ex) { Assert.assertTrue(ex.getMessage().contains(expectedErrorMessage)); }
+	}
+	
+	@Test(description = SHADOW_DOM_HTML_TESTS)
+	public void test_getNestedShadowRootElement_ShadowDOMHTML_RootElementExists() {
+		WebDriver.navigate().to(getTestFilePath());
+        WebElement nestedShadowHost = ShadowRootAssist.getNestedShadowRootElement(WebDriver, _nestedShadowHostElement, 20 , 2000);
+        WebElement nestedText = nestedShadowHost.findElement(By.cssSelector(_nestedShadowHostShadowContent));
+        Assert.assertEquals("nested text", nestedText.getText());
+	}
+	
+	@Test(description = SHADOW_DOM_HTML_TESTS)
+	public void test_getNestedShadowRootElement_ShadowDOMHTML_RootElementDoesNotExists () {
+		String expectedErrorMessage = "getNestedShadowRootElement: Nested shadow root element for selector '#shadow_content' in DOM hierarchy '#shadow_host > #shadow_content' Not Found.";
+        WebDriver.navigate().to(getTestFilePath());
+        try {
+        	ShadowRootAssist.getNestedShadowRootElement(WebDriver, _notExistsNestedShadowHostElement, 20 , 2000);
             Assert.fail("No Exception Thrown.");
         }
         catch (AssertionError ex) { throw ex; }
