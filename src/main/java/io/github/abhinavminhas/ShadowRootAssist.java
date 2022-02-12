@@ -137,4 +137,53 @@ public class ShadowRootAssist {
         return isPresent;
 	}
 	
+	/**
+	 * Checks if the nested shadow root element hierarchy exists or not.
+	 * 
+	 * @param webDriver						Selenium web driver instance.
+	 * @param shadowRootSelectors			List of shadow root element selectors (probably jQuery or CssSelectors) separated by '>'.
+	 * @param throwError					Boolean value to throw error if nested shadow root element hierarchy does not exists.
+	 * @param timeInSeconds					Wait time in seconds.
+	 * @param pollingIntervalInMilliseconds Polling interval time in milliseconds.
+	 * @return								Boolean value if nested shadow root element hierarchy exists or not.
+	 * @exception WebDriverException		Throws - 'WebDriverException' in case any shadow root element is not found in the nested hierarchy when @param 'throwError' is set to 'true'.
+	 */
+	public static Boolean isNestedShadowRootElementPresent(WebDriver webDriver, String shadowRootSelectors, Boolean throwError, int timeInSeconds, int pollingIntervalInMilliseconds) {
+		Boolean isPresent = false;
+        String[] listShadowRootSelectors = shadowRootSelectors.split(">");
+        for (int i = 0; i < listShadowRootSelectors.length ; i++) { listShadowRootSelectors[i] = listShadowRootSelectors[i].trim(); }
+        String shadowRootQuerySelector = ".querySelector('%s').shadowRoot";
+        String shadowRootQueryString = "";
+        for (String shadowRoot : listShadowRootSelectors) {
+        	String documentReturn = "return document%s;";
+        	String tempQueryString = String.format(shadowRootQuerySelector, shadowRoot);
+            shadowRootQueryString += tempQueryString;
+            String shadowRootElement = String.format(documentReturn, shadowRootQueryString);
+            try {
+            	WebDriverWait webDriverWait = new WebDriverWait(webDriver, timeInSeconds, pollingIntervalInMilliseconds);
+                webDriverWait.until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor)webDriver).executeScript(shadowRootElement) != null);
+    			Object returnedObject = ((JavascriptExecutor)webDriver).executeScript(shadowRootElement);
+    			if (returnedObject instanceof Map) {
+    				@SuppressWarnings("unchecked")
+    				Map<String, Object> map = (Map<String, Object>)returnedObject;
+    				RemoteWebElement remoteWebElement = new RemoteWebElement();
+    				remoteWebElement.setParent((RemoteWebDriver)webDriver);
+    				remoteWebElement.setId((String)map.values().iterator().next());
+    				Object requiredShadowRoot = remoteWebElement;
+    				webDriverWait.until(item -> requiredShadowRoot instanceof WebElement);
+    				isPresent = true;
+    			} else {
+    				webDriverWait.until(item -> returnedObject instanceof WebElement);
+    				isPresent = true;
+    			}
+            } catch (WebDriverException ex) {
+            	if (throwError)
+            		throw new WebDriverException(String.format("%s: Nested shadow root element for selector '%s' in DOM hierarchy '%s' Not Found.", new Object(){}.getClass().getEnclosingMethod().getName(), shadowRoot, shadowRootSelectors));
+            	else
+                    isPresent = false;
+            }
+		}
+        return isPresent;
+	}
+	
 }
