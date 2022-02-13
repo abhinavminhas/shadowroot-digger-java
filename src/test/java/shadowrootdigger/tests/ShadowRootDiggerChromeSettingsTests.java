@@ -53,8 +53,9 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
         do {
         	count++;
         	try {
-        		new WebDriverWait(WebDriver, 10, 1000)
-                .until(ExpectedConditions.elementToBeClickable(clearBrowsingTab.findElements(By.cssSelector(_divTabIdentifier)).iterator().next()));
+        		WebDriverWait webDriverWait = new WebDriverWait(WebDriver, 10, 1000);
+        		webDriverWait.until(ExpectedConditions.textToBePresentInElement(clearBrowsingTab.findElements(By.cssSelector(_divTabIdentifier)).iterator().next(), "Basic"));
+        		webDriverWait.until(ExpectedConditions.elementToBeClickable(clearBrowsingTab.findElements(By.cssSelector(_divTabIdentifier)).iterator().next()));
         		break;
         	}
         	catch (WebDriverException ex) {
