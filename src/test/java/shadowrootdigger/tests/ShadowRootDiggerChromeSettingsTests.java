@@ -50,19 +50,25 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
         WebDriver.navigate().to("chrome://settings/clearBrowserData");
         WebElement clearBrowsingTab = ShadowRootAssist.getNestedShadowRootElement(WebDriver, _tabRootElement, 20 , 2000);
         int count = 0;
+        WebElement requiredElement = null;
         do {
         	count++;
         	try {
+        		requiredElement = clearBrowsingTab.findElements(By.cssSelector(_divTabIdentifier)).iterator().next();
         		WebDriverWait webDriverWait = new WebDriverWait(WebDriver, 10, 1000);
-        		webDriverWait.until(ExpectedConditions.textToBePresentInElement(clearBrowsingTab.findElements(By.cssSelector(_divTabIdentifier)).iterator().next(), "Basic"));
-        		webDriverWait.until(ExpectedConditions.elementToBeClickable(clearBrowsingTab.findElements(By.cssSelector(_divTabIdentifier)).iterator().next()));
+        		webDriverWait.until(ExpectedConditions.textToBePresentInElement(requiredElement, "Basic"));
+        		webDriverWait.until(ExpectedConditions.elementToBeClickable(requiredElement));
+        		
         		break;
         	}
         	catch (WebDriverException ex) {
         		/* Retry */
         	}
         } while (count <= 1);
-        clearBrowsingTab.findElements(By.cssSelector(_divTabIdentifier)).iterator().next().click();
+        if (requiredElement != null)
+        	requiredElement.click();
+        else
+        	clearBrowsingTab.findElements(By.cssSelector(_divTabIdentifier)).iterator().next().click();
         WebElement settingsDropdownMenu = ShadowRootAssist.getNestedShadowRootElement(WebDriver, _settingsDropdownMenuRootElement, 20 , 2000);
         WebElement timeRangeSelect = settingsDropdownMenu.findElement(By.cssSelector(_selectTimeRangeIdentifier));
         new Select(timeRangeSelect).selectByVisibleText("Last hour");
