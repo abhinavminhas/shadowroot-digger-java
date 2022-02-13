@@ -115,18 +115,15 @@ public class ShadowRootAssist {
 			if (returnedObject instanceof Map) {
 				@SuppressWarnings("unchecked")
 				Map<String, Object> map = (Map<String, Object>)returnedObject;
-				webDriverWait.until(item -> map != null);
 				RemoteWebElement remoteWebElement = new RemoteWebElement();
 				remoteWebElement.setParent((RemoteWebDriver)webDriver);
 				remoteWebElement.setId((String)map.values().iterator().next());
 				Object requiredShadowRoot = remoteWebElement;
 				webDriverWait.until(item -> requiredShadowRoot instanceof WebElement);
 				isPresent = true;
-				return isPresent;
 			} else {
 				webDriverWait.until(item -> returnedObject instanceof WebElement);
 				isPresent = true;
-				return isPresent;
 			}
         } catch (WebDriverException ex) {
         	if (throwError)
