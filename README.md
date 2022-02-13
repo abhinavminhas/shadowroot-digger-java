@@ -16,7 +16,7 @@ The package is available and can be downloaded using [mvnrepository.com](https:/
 2. Checks if shadow root or nested shadow root is present or not in the DOM.  
    **NOTE:** *Supports Selenium 3 (Check Selenium Dependency Before Use)*
 
-## .NET Supported Versions
+## JAVA Supported Versions
 The solution is built on Java 8  
 
 ## Usage Guidelines
