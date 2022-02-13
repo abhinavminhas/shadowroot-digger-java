@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -25,6 +26,7 @@ public class TestBase {
 	protected static final String SHADOW_DOM_HTML_TESTS = "SHADOW-DOM-HTML-TESTS";
 	protected static Properties config;
 	private static FileInputStream fis;
+	private int retry = 0;
 	
 	/**
 	 * Gets configuration properties.
@@ -49,14 +51,22 @@ public class TestBase {
 		ChromeOptions chromeOptions = new ChromeOptions();
 		chromeOptions.addArguments("--disable-notifications");
 		chromeOptions.addArguments("--no-sandbox");
-		if (config.getProperty("UseDocker").equals("true")) {
-			WebDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub/"), chromeOptions);
-		} else {
-			WebDriver = new ChromeDriver(chromeOptions);
-		}
-		WebDriver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
-		WebDriver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-		WebDriver.manage().window().maximize();
+		do {
+			retry++;
+			try {
+				if (config.getProperty("UseDocker").equals("true")) {
+					WebDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub/"), chromeOptions);
+				} else {
+					WebDriver = new ChromeDriver(chromeOptions);
+				}
+				WebDriver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+				WebDriver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+				WebDriver.manage().window().maximize();
+				break;
+			} catch (WebDriverException ex) {
+				/* Retry */
+			}
+		} while (retry <= 1);
 	}
 	
 	/**
