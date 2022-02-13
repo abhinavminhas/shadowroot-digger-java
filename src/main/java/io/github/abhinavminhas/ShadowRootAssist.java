@@ -23,7 +23,7 @@ public class ShadowRootAssist {
 	 * Returns shadow root element for provided selector.
 	 * 
 	 * @param webDriver 					Selenium web driver instance.
-	 * @param shadowRootSelector 			Shadow root element selectors (probably jQuery or CssSelectors).
+	 * @param shadowRootSelector 			Shadow root element selector (probably jQuery or CssSelectors).
 	 * @param timeInSeconds 				Wait time in seconds.
 	 * @param pollingIntervalInMilliseconds	Polling interval time in milliseconds.
 	 * @return								Shadow root web element.
@@ -97,7 +97,7 @@ public class ShadowRootAssist {
 	 * Checks if the shadow root element exists or not.
 	 * 
 	 * @param webDriver						Selenium web driver instance.
-	 * @param shadowRootSelector			Shadow root element selectors (probably jQuery or CssSelectors).
+	 * @param shadowRootSelector			Shadow root element selector (probably jQuery or CssSelectors).
 	 * @param throwError					Boolean value to throw error if shadow root element hierarchy does not exists.
 	 * @param timeInSeconds					Wait time in seconds.
 	 * @param pollingIntervalInMilliseconds Polling interval time in milliseconds.
