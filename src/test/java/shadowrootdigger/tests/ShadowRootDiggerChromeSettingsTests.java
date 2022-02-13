@@ -1,11 +1,12 @@
 package shadowrootdigger.tests;
 
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import helper.TestBase;
@@ -48,7 +49,26 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
     {
         WebDriver.navigate().to("chrome://settings/clearBrowserData");
         WebElement clearBrowsingTab = ShadowRootAssist.getNestedShadowRootElement(WebDriver, _tabRootElement, 20 , 2000);
-        clearBrowsingTab.findElements(By.cssSelector(_divTabIdentifier)).iterator().next().click();
+        int count = 0;
+        WebElement requiredElement = null;
+        do {
+        	count++;
+        	try {
+        		requiredElement = clearBrowsingTab.findElements(By.cssSelector(_divTabIdentifier)).iterator().next();
+        		WebDriverWait webDriverWait = new WebDriverWait(WebDriver, 10, 1000);
+        		webDriverWait.until(ExpectedConditions.textToBePresentInElement(requiredElement, "Basic"));
+        		webDriverWait.until(ExpectedConditions.elementToBeClickable(requiredElement));
+        		
+        		break;
+        	}
+        	catch (WebDriverException ex) {
+        		/* Retry */
+        	}
+        } while (count <= 1);
+        if (requiredElement != null)
+        	requiredElement.click();
+        else
+        	clearBrowsingTab.findElements(By.cssSelector(_divTabIdentifier)).iterator().next().click();
         WebElement settingsDropdownMenu = ShadowRootAssist.getNestedShadowRootElement(WebDriver, _settingsDropdownMenuRootElement, 20 , 2000);
         WebElement timeRangeSelect = settingsDropdownMenu.findElement(By.cssSelector(_selectTimeRangeIdentifier));
         new Select(timeRangeSelect).selectByVisibleText("Last hour");
@@ -92,6 +112,31 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
             Assert.fail("No Exception Thrown.");
         }
         catch (AssertionError ex)  { throw ex; }
+        catch (WebDriverException ex) { Assert.assertTrue(ex.getMessage().contains(expectedErrorMessage)); }
+	}
+	
+	@Test(description = CHROME_SETTINGS_TESTS)
+	public void test_isNestedShadowRootElementPresent_ChromeSettings_NestedShadowRootExists() {
+		WebDriver.navigate().to("chrome://settings/clearBrowserData");
+        Boolean exists = ShadowRootAssist.isNestedShadowRootElementPresent(WebDriver, _tabRootElement, false, 20, 2000);
+        Assert.assertEquals(true, exists);
+        exists = ShadowRootAssist.isNestedShadowRootElementPresent(WebDriver, _clearBrowsingDataDialogRootElement, false, 20, 2000);
+        Assert.assertEquals(true, exists);
+        exists = ShadowRootAssist.isNestedShadowRootElementPresent(WebDriver, _tabRootElement, false, 20, 2000);
+        Assert.assertEquals(true, exists);
+	}
+	
+	@Test(description = CHROME_SETTINGS_TESTS)
+	public void test_isNestedShadowRootElementPresent_ChromeSettings_NestedShadowRootNotExists () {
+		String expectedErrorMessage = "isNestedShadowRootElementPresent: Nested shadow root element for selector 'settings-main.main' in DOM hierarchy 'settings-ui > settings-main.main' Not Found.";
+        WebDriver.navigate().to("chrome://settings/clearBrowserData");
+        Boolean exists = ShadowRootAssist.isNestedShadowRootElementPresent(WebDriver, _notExistsNestedShadowRootElement, false, 20, 2000);
+        Assert.assertEquals(false, exists);
+        try {
+        	ShadowRootAssist.isNestedShadowRootElementPresent(WebDriver, _notExistsNestedShadowRootElement, true, 20, 2000);
+            Assert.fail("No Exception Thrown.");
+        }
+        catch (AssertionError ex) { throw ex; }
         catch (WebDriverException ex) { Assert.assertTrue(ex.getMessage().contains(expectedErrorMessage)); }
 	}
 	
