@@ -49,8 +49,18 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
     {
         WebDriver.navigate().to("chrome://settings/clearBrowserData");
         WebElement clearBrowsingTab = ShadowRootAssist.getNestedShadowRootElement(WebDriver, _tabRootElement, 20 , 2000);
-        new WebDriverWait(WebDriver, 20, 1000)
-        .until(ExpectedConditions.elementToBeClickable(clearBrowsingTab.findElements(By.cssSelector(_divTabIdentifier)).iterator().next()));
+        int count = 0;
+        do {
+        	count++;
+        	try {
+        		new WebDriverWait(WebDriver, 10, 1000)
+                .until(ExpectedConditions.elementToBeClickable(clearBrowsingTab.findElements(By.cssSelector(_divTabIdentifier)).iterator().next()));
+        		break;
+        	}
+        	catch (WebDriverException ex) {
+        		/* Retry */
+        	}
+        } while (count <= 1);
         clearBrowsingTab.findElements(By.cssSelector(_divTabIdentifier)).iterator().next().click();
         WebElement settingsDropdownMenu = ShadowRootAssist.getNestedShadowRootElement(WebDriver, _settingsDropdownMenuRootElement, 20 , 2000);
         WebElement timeRangeSelect = settingsDropdownMenu.findElement(By.cssSelector(_selectTimeRangeIdentifier));
