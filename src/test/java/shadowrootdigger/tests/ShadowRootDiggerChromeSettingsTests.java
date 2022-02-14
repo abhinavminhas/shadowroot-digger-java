@@ -3,11 +3,10 @@ package shadowrootdigger.tests;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import helper.TestBase;
@@ -59,7 +58,9 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
 				} catch (InterruptedException e) {
 					/* Swallow */
 				}
-        		clearBrowsingTab.findElements(By.cssSelector(divTabIdentifier)).iterator().next().click();
+        		WebElement requiredElement = clearBrowsingTab.findElements(By.cssSelector(divTabIdentifier)).iterator().next();
+        		((JavascriptExecutor)WebDriver).executeScript("arguments[0].scrollIntoView({block: \"center\"});", requiredElement);
+        		requiredElement.click();
         		break;
         	}
         	catch (ElementNotInteractableException ex) {
