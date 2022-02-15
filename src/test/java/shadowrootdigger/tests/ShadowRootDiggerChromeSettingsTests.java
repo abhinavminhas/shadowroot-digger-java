@@ -3,6 +3,7 @@ package shadowrootdigger.tests;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -60,6 +61,9 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
         		webDriverWait.until((ExpectedCondition<Boolean>) wd -> requiredElement.getText().equals("Basic") && requiredElement.isDisplayed() && requiredElement.isEnabled());
         		requiredElement.click();
         		break;
+        	}
+        	catch (TimeoutException ex) {
+        		/* Retry */
         	}
         	catch (ElementNotInteractableException ex) {
         		/* Retry */
