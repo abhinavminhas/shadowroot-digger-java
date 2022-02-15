@@ -21,8 +21,8 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 @Test
 public class TestBase {
 
-	protected WebDriver WebDriver;
-	private String ChromeDriverVersion = "97.0.4692.71";
+	protected WebDriver webDriver;
+	private String chromeDriverVersion = "97.0.4692.71";
 	protected static final String CHROME_SETTINGS_TESTS = "CHROME-SETTINGS-TESTS";
 	protected static final String SHADOW_DOM_HTML_TESTS = "SHADOW-DOM-HTML-TESTS";
 	protected static Properties config;
@@ -48,7 +48,7 @@ public class TestBase {
 	 */
 	@BeforeMethod(alwaysRun = true)
 	public void getChromeDriver() throws MalformedURLException {
-		WebDriverManager.chromedriver().driverVersion(ChromeDriverVersion).setup();
+		WebDriverManager.chromedriver().driverVersion(chromeDriverVersion).setup();
 		ChromeOptions chromeOptions = new ChromeOptions();
 		chromeOptions.addArguments("--disable-notifications");
 		chromeOptions.addArguments("--no-sandbox");
@@ -56,13 +56,13 @@ public class TestBase {
 			retry++;
 			try {
 				if (config.getProperty("UseDocker").equals("true")) {
-					WebDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub/"), chromeOptions);
+					webDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub/"), chromeOptions);
 				} else {
-					WebDriver = new ChromeDriver(chromeOptions);
+					webDriver = new ChromeDriver(chromeOptions);
 				}
-				WebDriver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
-				WebDriver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-				WebDriver.manage().window().maximize();
+				webDriver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+				webDriver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+				webDriver.manage().window().maximize();
 				break;
 			} catch (WebDriverException ex) {
 				/* Retry */
@@ -75,7 +75,7 @@ public class TestBase {
 	 */
 	@AfterMethod(alwaysRun = true)
 	public void quitDriver() {
-		WebDriver.quit();
+		webDriver.quit();
 	}
 	
 	/**
