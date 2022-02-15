@@ -15,7 +15,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 @Test
@@ -52,6 +51,7 @@ public class TestBase {
 		ChromeOptions chromeOptions = new ChromeOptions();
 		chromeOptions.addArguments("--disable-notifications");
 		chromeOptions.addArguments("--no-sandbox");
+		Boolean sessionCreated = false;
 		do {
 			retry++;
 			try {
@@ -63,11 +63,14 @@ public class TestBase {
 				webDriver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 				webDriver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 				webDriver.manage().window().maximize();
-				break;
+				sessionCreated = true;
+				break; 
 			} catch (WebDriverException ex) {
 				/* Retry */
 			}
 		} while (retry <= 1);
+		if (!sessionCreated)
+			throw new WebDriverException("Failed to create webdriver session.");
 	}
 	
 	/**
