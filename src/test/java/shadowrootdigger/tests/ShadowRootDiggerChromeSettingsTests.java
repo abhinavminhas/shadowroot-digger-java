@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import helper.TestBase;
 import io.github.abhinavminhas.ShadowRootAssist;
 
+@Test
 public class ShadowRootDiggerChromeSettingsTests extends TestBase {
 
 	private String tabRootElement = "body settings-ui > div#container settings-main#main > settings-basic-page.cr-centered-card-container > settings-privacy-page > settings-clear-browsing-data-dialog > cr-tabs[role=\"tablist\"]";

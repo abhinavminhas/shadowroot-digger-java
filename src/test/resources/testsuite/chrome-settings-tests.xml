@@ -1,10 +1,9 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="ShadowRoot Digger Tests" parallel="methods" thread-count="4">
-	<test name="ShadowRoot Digger Chrome Settings Tests">
+<suite name="ShadowRoot Digger Tests" parallel="tests" thread-count="1">
+	<test name="CHROME-SETTINGS-TESTS">
 		<classes>
-			<class
-				name="shadowrootdigger.tests.ShadowRootDiggerChromeSettingsTests" />
+			<class name="shadowrootdigger.tests.ShadowRootDiggerChromeSettingsTests" />
 		</classes>
 	</test>
 </suite>

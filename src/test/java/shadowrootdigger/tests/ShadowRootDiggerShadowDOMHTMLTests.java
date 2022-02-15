@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import helper.TestBase;
 import io.github.abhinavminhas.ShadowRootAssist;
 
+@Test
 public class ShadowRootDiggerShadowDOMHTMLTests extends TestBase {
 	
 	private String shadowHostElement = "#shadow_host";

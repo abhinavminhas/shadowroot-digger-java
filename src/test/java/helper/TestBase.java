@@ -15,6 +15,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 @Test
@@ -45,7 +46,7 @@ public class TestBase {
 	 * 
 	 * @throws MalformedURLException
 	 */
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void getChromeDriver() throws MalformedURLException {
 		WebDriverManager.chromedriver().driverVersion(ChromeDriverVersion).setup();
 		ChromeOptions chromeOptions = new ChromeOptions();
@@ -72,7 +73,7 @@ public class TestBase {
 	/**
 	 * Tear down test.
 	 */
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	public void quitDriver() {
 		WebDriver.quit();
 	}
