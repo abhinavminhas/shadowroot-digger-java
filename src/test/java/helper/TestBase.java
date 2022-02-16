@@ -11,17 +11,17 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 @Test
 public class TestBase {
 
-	protected WebDriver WebDriver;
-	private String ChromeDriverVersion = "97.0.4692.71";
+	protected WebDriver webDriver;
+	private String chromeDriverVersion = "97.0.4692.71";
 	protected static final String CHROME_SETTINGS_TESTS = "CHROME-SETTINGS-TESTS";
 	protected static final String SHADOW_DOM_HTML_TESTS = "SHADOW-DOM-HTML-TESTS";
 	protected static Properties config;
@@ -45,36 +45,40 @@ public class TestBase {
 	 * 
 	 * @throws MalformedURLException
 	 */
-	@BeforeTest
+	@BeforeMethod(alwaysRun = true)
 	public void getChromeDriver() throws MalformedURLException {
-		WebDriverManager.chromedriver().driverVersion(ChromeDriverVersion).setup();
+		WebDriverManager.chromedriver().driverVersion(chromeDriverVersion).setup();
 		ChromeOptions chromeOptions = new ChromeOptions();
 		chromeOptions.addArguments("--disable-notifications");
 		chromeOptions.addArguments("--no-sandbox");
+		Boolean sessionCreated = false;
 		do {
 			retry++;
 			try {
 				if (config.getProperty("UseDocker").equals("true")) {
-					WebDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub/"), chromeOptions);
+					webDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub/"), chromeOptions);
 				} else {
-					WebDriver = new ChromeDriver(chromeOptions);
+					webDriver = new ChromeDriver(chromeOptions);
 				}
-				WebDriver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
-				WebDriver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-				WebDriver.manage().window().maximize();
-				break;
+				webDriver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+				webDriver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+				webDriver.manage().window().maximize();
+				sessionCreated = true;
+				break; 
 			} catch (WebDriverException ex) {
 				/* Retry */
 			}
 		} while (retry <= 1);
+		if (!sessionCreated)
+			throw new WebDriverException("Failed to create webdriver session.");
 	}
 	
 	/**
 	 * Tear down test.
 	 */
-	@AfterTest
+	@AfterMethod(alwaysRun = true)
 	public void quitDriver() {
-		WebDriver.quit();
+		webDriver.quit();
 	}
 	
 	/**
