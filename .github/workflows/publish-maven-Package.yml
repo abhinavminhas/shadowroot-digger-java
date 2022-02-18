@@ -20,12 +20,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Find And Replace Values (pom.xml)
-        uses: datamonsters/replace-action@v2
-        with:
-          files: pom.xml
-          replacements: '__SNAPSHOT_OSSRH_ID__=${{ secrets.OSSRH_ID }},__OSSRH_ID__=${{ secrets.OSSRH_ID }}'
-
       - name: Set Up Maven Central Repository - JAVA ${{ matrix.java-version }}
         uses: actions/setup-java@v2
         with:
