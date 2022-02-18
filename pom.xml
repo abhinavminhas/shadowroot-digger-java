@@ -26,14 +26,16 @@
 
 	<!-- Pom.xml Properties -->
 	<properties>
-		<!-- dependency artifact versions -->
+		<!-- Project configuration -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		
+		<!-- Dependency artifact versions -->
 		<selenium.java.version>3.141.59</selenium.java.version>
 		<webdrivermanager.version>5.0.3</webdrivermanager.version>
 		<testng.version>7.5</testng.version>
 
-		<!-- build artifact versions -->
+		<!-- Build artifact versions -->
 		<maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
