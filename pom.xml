@@ -24,6 +24,11 @@
 		</developer>
 	</developers>
 
+	<scm>
+		<connection>https://github.com/abhinavminhas/shadowroot-digger-java.git</connection>
+		<url>https://github.com/abhinavminhas/shadowroot-digger-java</url>
+	</scm>
+
 	<!-- Pom.xml Properties -->
 	<properties>
 		<!-- Project configuration -->
@@ -44,6 +49,7 @@
 		<nexus.staging.maven.plugin.version>1.6.11</nexus.staging.maven.plugin.version>
 		<maven.source.plugin.version>3.2.1</maven.source.plugin.version>
 		<maven.javadoc.plugin.version>3.3.2</maven.javadoc.plugin.version>
+		<maven.gpg.plugin.version>1.5</maven.gpg.plugin.version>
 	</properties>
 
 	<!-- Dependencies -->
@@ -150,6 +156,21 @@
 						<id>attach-javadocs</id>
 						<goals>
 							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>${maven.gpg.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
 						</goals>
 					</execution>
 				</executions>
