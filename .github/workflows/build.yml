@@ -34,5 +34,5 @@ jobs:
         run: mvn --batch-mode --update-snapshots compile -DskipTests=true
 
       - name: Test with Maven
-        if: ${{ matrix.os == 'windows-latest' && matrix.java-version == '8' }}
+        if: ${{ matrix.os == 'windows-2019' && matrix.java-version == '8' }}
         run: mvn test
