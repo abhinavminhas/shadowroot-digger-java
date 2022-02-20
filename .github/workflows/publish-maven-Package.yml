@@ -1,0 +1,39 @@
+name: Publish Maven Package
+
+env:
+    MAVEN_PACKAGE_VERSION: "1.0.0-SNAPSHOT"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        java-version: [ '8' ]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set Up Maven Central Repository - JAVA ${{ matrix.java-version }}
+        uses: actions/setup-java@v2
+        with:
+          java-version: '${{ matrix.java-version }}'
+          distribution: 'adopt'
+          server-id: ${{ secrets.secrets.OSSRH_ID }}
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
+      - name: Publish Maven Package
+        run: mvn --batch-mode deploy -DskipTests=true
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}

@@ -53,10 +53,10 @@ public class ShadowRootAssist {
 	}
 	
 	/**
-	 * Returns nested shadow root element from DOM hierarchy of shadow root elements with selectors separated by '>'.
+	 * Returns nested shadow root element from DOM hierarchy of shadow root elements with selectors separated by '&gt;'.
 	 * 
 	 * @param webDriver						Selenium web driver instance.
-	 * @param shadowRootSelectors			List of shadow root element selectors (probably jQuery or CssSelectors) separated by '>'.
+	 * @param shadowRootSelectors			List of shadow root element selectors (probably jQuery or CssSelectors) separated by '&gt;'.
 	 * @param timeInSeconds					Wait time in seconds.
 	 * @param pollingIntervalInMilliseconds Polling interval time in milliseconds.
 	 * @return								Nested shadow root web element.
@@ -138,7 +138,7 @@ public class ShadowRootAssist {
 	 * Checks if the nested shadow root element hierarchy exists or not.
 	 * 
 	 * @param webDriver						Selenium web driver instance.
-	 * @param shadowRootSelectors			List of shadow root element selectors (probably jQuery or CssSelectors) separated by '>'.
+	 * @param shadowRootSelectors			List of shadow root element selectors (probably jQuery or CssSelectors) separated by "&gt;".
 	 * @param throwError					Boolean value to throw error if nested shadow root element hierarchy does not exists.
 	 * @param timeInSeconds					Wait time in seconds.
 	 * @param pollingIntervalInMilliseconds Polling interval time in milliseconds.
