@@ -31,7 +31,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots verify -DskipTests=true
+        run: mvn --batch-mode --update-snapshots compile -DskipTests=true
 
       - name: Test with Maven
         if: ${{ matrix.os == 'windows-latest' && matrix.java-version == '8' }}
