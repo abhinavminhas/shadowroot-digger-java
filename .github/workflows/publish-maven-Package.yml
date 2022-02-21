@@ -27,7 +27,7 @@ jobs:
           distribution: 'temurin'
       
       - name: Build With Maven
-        run: mvn package -DskipTests=true --file pom.xml
+        run: mvn -B package -DskipTests=true --file pom.xml
 
       - name: Set Up Maven Central
         uses: actions/setup-java@v2
@@ -41,7 +41,7 @@ jobs:
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
       - name: Publish Maven Package
-        run: mvn deploy -DskipTests=true
+        run: mvn -B deploy -DskipTests=true
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_CENTRAL_TOKEN: ${{ secrets.OSSRH_TOKEN }}
