@@ -34,4 +34,4 @@ jobs:
           gpg_passphrase: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
           nexus_username: ${{ secrets.OSSRH_USERNAME }}
           nexus_password: ${{ secrets.OSSRH_TOKEN }}
-        run: mvn --batch-mode deploy -DskipTests=true
+          maven_goals_phases: --batch-mode deploy -DskipTests=true
