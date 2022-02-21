@@ -20,7 +20,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set Up Maven Central Repository - JAVA ${{ matrix.java-version }}
+      - name: Set Up - JAVA ${{ matrix.java-version }}
+        uses: actions/setup-java@v2
+        with:
+          java-version: '${{ matrix.java-version }}'
+          distribution: 'temurin'
+      
+      - name: Build With Maven
+        run: mvn package -DskipTests=true --file pom.xml
+
+      - name: Set Up Maven Central
         uses: actions/setup-java@v2
         with:
           java-version: '${{ matrix.java-version }}'
@@ -32,7 +41,7 @@ jobs:
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
       - name: Publish Maven Package
-        run: mvn -X --batch-mode deploy -DskipTests=true
+        run: mvn deploy -DskipTests=true
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_CENTRAL_TOKEN: ${{ secrets.OSSRH_TOKEN }}
