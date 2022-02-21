@@ -20,23 +20,24 @@ jobs:
         with:
           fetch-depth: 0
 
+    - name: Find And Replace Values (settings.xml)
+      uses: datamonsters/replace-action@v2
+      with:
+        files: settings.xml
+        replacements: '__SERVERID__=${{ secrets.OSSRH_ID }},__USERNAME__=${{ secrets.OSSRH_USERNAME }},__PASSWORD__=${{ secrets.OSSRH_TOKEN }},__PASSSPHRASE__=${{ secrets.MAVEN_GPG_PASSPHRASE }}'
+
       - name: Set Up Maven Central - JAVA ${{ matrix.java-version }}
         uses: actions/setup-java@v2
         with:
           java-version: '${{ matrix.java-version }}'
           distribution: 'temurin'
           settings-path: ${{ github.workspace }}
-          server-id: ${{ secrets.OSSRH_ID }}
-          server-username: MAVEN_USERNAME
-          server-password: MAVEN_CENTRAL_TOKEN
-          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
-          gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
-      - name: Build With Maven
-        run: mvn -B package -DskipTests=true --file pom.xml
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
 
       - name: Publish Maven Package
-        run: mvn -B deploy -DskipTests=true
+        run: mvn -B deploy -DskipTests=true -s settings.xml
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_CENTRAL_TOKEN: ${{ secrets.OSSRH_TOKEN }}
