@@ -29,7 +29,7 @@ jobs:
       - name: Publish Maven Package
         uses: samuelmeuli/action-maven-publish@v1
         with:
-          server-id: ${{ secrets.secrets.OSSRH_ID }}
+          server_id: ${{ secrets.secrets.OSSRH_ID }}
           gpg_private_key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           gpg_passphrase: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
           nexus_username: ${{ secrets.OSSRH_USERNAME }}
