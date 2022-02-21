@@ -25,6 +25,7 @@ jobs:
         with:
           java-version: '${{ matrix.java-version }}'
           distribution: 'temurin'
+          settings-path: ${{ github.workspace }}
           server-id: ${{ secrets.OSSRH_ID }}
           server-username: MAVEN_USERNAME
           server-password: MAVEN_CENTRAL_TOKEN
