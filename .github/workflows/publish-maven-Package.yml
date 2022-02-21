@@ -27,11 +27,9 @@ jobs:
           distribution: 'adopt'
 
       - name: Publish Maven Package
-        uses: samuelmeuli/action-maven-publish@v1
-        with:
-          server_id: ${{ secrets.secrets.OSSRH_ID }}
-          gpg_private_key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
-          gpg_passphrase: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
-          nexus_username: ${{ secrets.OSSRH_USERNAME }}
-          nexus_password: ${{ secrets.OSSRH_TOKEN }}
-          maven_goals_phases: --batch-mode deploy -DskipTests=true
+		uses: samuelmeuli/action-maven-publish@v1
+        run: mvn --batch-mode deploy -DskipTests=true
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
