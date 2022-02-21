@@ -20,11 +20,11 @@ jobs:
         with:
           fetch-depth: 0
 
-    - name: Find And Replace Values (settings.xml)
-      uses: datamonsters/replace-action@v2
-      with:
-        files: settings.xml
-        replacements: '__SERVERID__=${{ secrets.OSSRH_ID }},__USERNAME__=${{ secrets.OSSRH_USERNAME }},__PASSWORD__=${{ secrets.OSSRH_TOKEN }},__PASSSPHRASE__=${{ secrets.MAVEN_GPG_PASSPHRASE }}'
+      - name: Find And Replace Values (settings.xml)
+        uses: datamonsters/replace-action@v2
+        with:
+          files: settings.xml
+          replacements: '__SERVERID__=${{ secrets.OSSRH_ID }},__USERNAME__=${{ secrets.OSSRH_USERNAME }},__PASSWORD__=${{ secrets.OSSRH_TOKEN }},__PASSSPHRASE__=${{ secrets.MAVEN_GPG_PASSPHRASE }}'
 
       - name: Set Up Maven Central - JAVA ${{ matrix.java-version }}
         uses: actions/setup-java@v2
