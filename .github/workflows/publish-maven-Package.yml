@@ -25,11 +25,13 @@ jobs:
         with:
           java-version: '${{ matrix.java-version }}'
           distribution: 'adopt'
-          server-id: ${{ secrets.secrets.OSSRH_ID }}
-          server-username: ${{ secrets.OSSRH_USERNAME }}
-          server-password: ${{ secrets.OSSRH_TOKEN }}
-          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
-          gpg-passphrase: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
 
       - name: Publish Maven Package
+        uses: samuelmeuli/action-maven-publish@v1
+        with:
+          server-id: ${{ secrets.secrets.OSSRH_ID }}
+          gpg_private_key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          gpg_passphrase: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+          nexus_username: ${{ secrets.OSSRH_USERNAME }}
+          nexus_password: ${{ secrets.OSSRH_TOKEN }}
         run: mvn --batch-mode deploy -DskipTests=true
