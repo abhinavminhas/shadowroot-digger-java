@@ -25,7 +25,7 @@ jobs:
         with:
           java-version: '${{ matrix.java-version }}'
           distribution: 'temurin'
-          server-id: ${{ secrets.secrets.OSSRH_ID }}
+          server-id: ${{ secrets.OSSRH_ID }}
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
