@@ -8,13 +8,13 @@
   </servers>
   <profiles>
     <profile>
-      <id>__SERVERID__</id>
+      <id>__PROFILEID__</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
         <gpg.executable>gpg</gpg.executable>
-        <gpg.passphrase>__PASSSPHRASE__</gpg.passphrase>
+        <gpg.passphrase>__PASSPHRASE__</gpg.passphrase>
       </properties>
     </profile>
   </profiles>
