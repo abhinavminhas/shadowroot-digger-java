@@ -26,20 +26,17 @@ jobs:
           java-version: '${{ matrix.java-version }}'
           distribution: 'temurin'
           server-id: ${{ secrets.OSSRH_ID }}
-          server-username: ${{ secrets.OSSRH_USERNAME }}
-          server-password: ${{ secrets.OSSRH_TOKEN }}
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_CENTRAL_TOKEN
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           gpg-passphrase: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
-          settings-path: ${{ github.workspace }}
-
-      - name: Find And Replace Values (settings.xml)
-        uses: datamonsters/replace-action@v2
-        with:
-          files: settings.xml
-          replacements: '__SERVERID__=${{ secrets.OSSRH_ID }},__USERNAME__=${{ secrets.OSSRH_USERNAME }},__PASSWORD__=${{ secrets.OSSRH_TOKEN }},__PROFILEID__=${{ secrets.OSSRH_ID }},__PASSPHRASE__=${{ secrets.MAVEN_GPG_PASSPHRASE }}'
 
       - name: Build with Maven - JAVA ${{ matrix.java-version }}
         run: mvn -B package -DskipTests=true --file pom.xml
 
-      - name: Publish Maven Package - JAVA ${{ matrix.java-version }}
-        run: mvn -B deploy -DskipTests=true -s settings.xml
+      - name: Publish To Apache Maven Central
+      run: mvn -B deploy -DskipTests=true
+      env:
+        MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        MAVEN_CENTRAL_TOKEN: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
+        MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
