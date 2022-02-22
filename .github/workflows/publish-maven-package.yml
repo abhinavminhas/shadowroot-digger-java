@@ -19,6 +19,14 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      
+      - name: Configure GPG Key
+        run: |
+          mkdir -p ~/.gnupg/
+          printf "$MAVEN_GPG_PRIVATE_KEY" | base64 --decode > ~/.gnupg/private.key
+          gpg --batch --import ~/.gnupg/private.key
+        env:
+          MAVEN_GPG_PRIVATE_KEY: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
 
       - name: Find And Replace Values (settings.xml)
         uses: datamonsters/replace-action@v2
