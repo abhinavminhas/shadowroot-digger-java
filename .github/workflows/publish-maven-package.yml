@@ -19,14 +19,18 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      
-      - name: Configure GPG Key
-        run: |
-          mkdir -p ~/.gnupg/
-          printf "$MAVEN_GPG_PRIVATE_KEY" | base64 --decode > ~/.gnupg/private.key
-          gpg --batch --import ~/.gnupg/private.key
-        env:
-          MAVEN_GPG_PRIVATE_KEY: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+
+      - name: Set Up Maven Central - JAVA ${{ matrix.java-version }}
+        uses: actions/setup-java@v2
+        with:
+          java-version: '${{ matrix.java-version }}'
+          distribution: 'temurin'
+          server-id: ${{ secrets.OSSRH_ID }}
+          server-username: ${{ secrets.OSSRH_USERNAME }}
+          server-password: ${{ secrets.OSSRH_TOKEN }}
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          gpg-passphrase: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+          settings-path: ${{ github.workspace }}
 
       - name: Find And Replace Values (settings.xml)
         uses: datamonsters/replace-action@v2
@@ -34,19 +38,8 @@ jobs:
           files: settings.xml
           replacements: '__SERVERID__=${{ secrets.OSSRH_ID }},__USERNAME__=${{ secrets.OSSRH_USERNAME }},__PASSWORD__=${{ secrets.OSSRH_TOKEN }},__PROFILEID__=${{ secrets.OSSRH_ID }},__PASSPHRASE__=${{ secrets.MAVEN_GPG_PASSPHRASE }}'
 
-      - name: Set Up Maven Central - JAVA ${{ matrix.java-version }}
-        uses: actions/setup-java@v2
-        with:
-          java-version: '${{ matrix.java-version }}'
-          distribution: 'temurin'
-          settings-path: ${{ github.workspace }}
-
-      - name: Build with Maven
+      - name: Build with Maven - JAVA ${{ matrix.java-version }}
         run: mvn -B package -DskipTests=true --file pom.xml
 
-      - name: Publish Maven Package
+      - name: Publish Maven Package - JAVA ${{ matrix.java-version }}
         run: mvn -B deploy -DskipTests=true -s settings.xml
-        env:
-          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          MAVEN_CENTRAL_TOKEN: ${{ secrets.OSSRH_TOKEN }}
-          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
