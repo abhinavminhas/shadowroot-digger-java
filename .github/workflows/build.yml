@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ windows-2019, ubuntu-20.04, macOS-11 ]
+        os: [ windows-2022, ubuntu-20.04, macOS-11 ]
         java-version: [ '8', '11', '17' ]
 
     steps:
@@ -34,5 +34,5 @@ jobs:
         run: mvn --batch-mode --update-snapshots compile -DskipTests=true
 
       - name: Test with Maven
-        if: ${{ matrix.os == 'windows-2019' && matrix.java-version == '8' }}
+        if: ${{ matrix.os == 'windows-2022' && matrix.java-version == '8' }}
         run: mvn test
