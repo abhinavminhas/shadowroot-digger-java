@@ -4,12 +4,15 @@
 [![codecov](https://codecov.io/gh/abhinavminhas/shadowroot-digger-java/branch/main/graph/badge.svg?token=8LXZL9ZLZR)](https://codecov.io/gh/abhinavminhas/shadowroot-digger-java)
 ![maintainer](https://img.shields.io/badge/Creator/Maintainer-abhinavminhas-e65c00)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.abhinavminhas/ShadowRoot.Digger?label=Maven%20Central)](https://search.maven.org/search?q=a:ShadowRoot.Digger)
+[![Maven Repository](https://img.shields.io/maven-central/v/io.github.abhinavminhas/ShadowRoot.Digger?label=Maven%20Repository)](https://mvnrepository.com/artifact/io.github.abhinavminhas/ShadowRoot.Digger)  
 
 One of the important aspect of web components is encapsulation and [Shadow DOM API](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) is a key part of this, allowing hidden DOM trees to be attached to elements in the regular DOM tree. This shadow DOM tree starts with a shadow root, underneath which any elements can be attached, in the same way as the normal DOM. The solution combines the power of [Document Query Selector API](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)  with [Selenium](https://www.selenium.dev/) to grab such shadow root DOM trees and interact with any elements encapsulated within it.
 
 ## Download
-The package is available and can be downloaded using [mvnrepository.com](https://mvnrepository.com/) package manager.  
-- Package Name - [ShadowRoot.Digger](https://mvnrepository.com/).
+The package is available and can be downloaded using [Maven Central Repository Search](https://search.maven.org/)/[MVNRepository](https://mvnrepository.com/) package manager.  
+- Package Name (Maven Central Repository Search) - [ShadowRoot.Digger](https://search.maven.org/search?q=a:ShadowRoot.Digger).
+- Package Name (MVNRepository) - [ShadowRoot.Digger](https://mvnrepository.com/artifact/io.github.abhinavminhas/ShadowRoot.Digger).
 
 ## Features
 1. Returns shadow root or nested shadow root from DOM.
@@ -17,7 +20,7 @@ The package is available and can be downloaded using [mvnrepository.com](https:/
    **NOTE:** *Supports Selenium 3 (Check Selenium Dependency Before Use)*
 
 ## JAVA Supported Versions
-The solution is built on Java 8  
+The solution is built on Java 8.
 
 ## Usage Guidelines
 1. Install the maven package [ShadowRoot.Digger](https://mvnrepository.com/).  
@@ -44,6 +47,7 @@ The solution is built on Java 8
 
    | Google Chrome | Chrome Driver | Microsoft Edge | Edge Driver |
    | ----------- | ----------- | ----------- | ----------- |
+   | 98.0.4758.102 | 98.0.4758.102 | 98.0.1108.56 | 98.0.1108.56 |
    | 97.0.4692.71 | 97.0.4692.71 | 97.0.1072.69 | 97.0.1072.69 |
    | 96.0.4664.110 | 96.0.4664.45 | 96.0.1054.62 | 96.0.1054.62 |
    | 95.0.4638.69 | 95.0.4638.54 | 95.0.1020.53 | 95.0.1020.53 |
