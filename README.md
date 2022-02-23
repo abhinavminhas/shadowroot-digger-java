@@ -10,7 +10,7 @@
 One of the important aspect of web components is encapsulation and [Shadow DOM API](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) is a key part of this, allowing hidden DOM trees to be attached to elements in the regular DOM tree. This shadow DOM tree starts with a shadow root, underneath which any elements can be attached, in the same way as the normal DOM. The solution combines the power of [Document Query Selector API](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)  with [Selenium](https://www.selenium.dev/) to grab such shadow root DOM trees and interact with any elements encapsulated within it.
 
 ## Download
-The package is available and can be downloaded using [Maven Central Repository Search](https://search.maven.org/) or [MVNRepository](https://mvnrepository.com/) package manager.  
+The package is available and can be downloaded using [Maven Central Repository Search](https://search.maven.org/)/[MVNRepository](https://mvnrepository.com/) package manager.  
 - Package Name (Maven Central Repository Search) - [ShadowRoot.Digger](https://search.maven.org/search?q=a:ShadowRoot.Digger).
 - Package Name (MVNRepository) - [ShadowRoot.Digger](https://mvnrepository.com/artifact/io.github.abhinavminhas/ShadowRoot.Digger).
 
