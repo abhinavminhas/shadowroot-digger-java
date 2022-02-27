@@ -78,7 +78,8 @@ public class TestBase {
 	 */
 	@AfterMethod(alwaysRun = true)
 	public void quitDriver() {
-		webDriver.quit();
+		if (webDriver != null)
+			webDriver.quit();
 	}
 	
 	/**
