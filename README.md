@@ -23,17 +23,17 @@ The package is available and can be downloaded using [Maven Central Repository S
 The solution is built on Java 8.
 
 ## Usage Guidelines
-1. Install the maven package [ShadowRoot.Digger](https://mvnrepository.com/).  
-2. Use below extension methods to get shadow root or nested shadow root.  
-   Requried parameters - webdriver instance & shadow root host selector identifier/s.
+1. Install the maven package [ShadowRoot.Digger (Maven Central)](https://search.maven.org/search?q=a:ShadowRoot.Digger)/[ShadowRoot.Digger (MVNRepository)](https://mvnrepository.com/artifact/io.github.abhinavminhas/ShadowRoot.Digger).  
+2. Use below methods to get shadow root or nested shadow root.  
+   Required parameters - webdriver instance, shadow root host selector identifier/s, wait time in seconds & polling interval in milliseconds.
     ```
     ShadowRootAssist.getShadowRootElement()
     ShadowRootAssist.getNestedShadowRootElement()
     ```
-    The returned shadow root element from above extension methods can be used to find element/s encapsulated within it.  
+    The returned shadow root element from above methods can be used to find element/s encapsulated within it.  
     **NOTE:** *Use **[jQuery Selectors](https://www.w3schools.com/jquery/jquery_ref_selectors.asp)** or **[CSS Selectors](https://www.w3schools.com/cssref/css_selectors.asp)** for shadow root host identifications.*
-3. Use below extension methods for checking if shadow root or nested shadow root exists or not.  
-   Requried parameters - webdriver instance & shadow root host selector identifier/s.
+3. Use below methods for checking if shadow root or nested shadow root exists or not.  
+   Required parameters - webdriver instance, shadow root host selector identifier/s, flag to throw error if shadow root element not found, wait time in seconds & polling interval in milliseconds.
     ```
     ShadowRootAssist.isShadowRootElementPresent()
     ShadowRootAssist.isNestedShadowRootElementPresent()
