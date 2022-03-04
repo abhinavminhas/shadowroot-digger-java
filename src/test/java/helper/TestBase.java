@@ -4,8 +4,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -60,8 +60,8 @@ public class TestBase {
 				} else {
 					webDriver = new ChromeDriver(chromeOptions);
 				}
-				webDriver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
-				webDriver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+				webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
+				webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(40));
 				webDriver.manage().window().maximize();
 				sessionCreated = true;
 				break; 

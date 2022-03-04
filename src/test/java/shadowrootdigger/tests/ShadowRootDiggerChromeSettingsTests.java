@@ -1,8 +1,10 @@
 package shadowrootdigger.tests;
 
+import java.time.Duration;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -31,7 +33,7 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
 	@Test(description = CHROME_SETTINGS_TESTS)
 	public void test_getShadowRootElement_ChromeSettings_ShadowRootElementExists() {
         webDriver.navigate().to("chrome://settings/clearBrowserData");
-        WebElement clearBrowsingTab = ShadowRootAssist.getShadowRootElement(webDriver, existsShadowRootElement, 20 , 2000);
+        SearchContext clearBrowsingTab = ShadowRootAssist.getShadowRootElement(webDriver, existsShadowRootElement, 20 , 2000);
         Assert.assertNotNull(clearBrowsingTab);
     }
 	
@@ -51,13 +53,13 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
 	public void test_getNestedShadowRootElement_ChromeSettings_ClearChromeData()
     {
         webDriver.navigate().to("chrome://settings/clearBrowserData");
-        WebElement clearBrowsingTab = ShadowRootAssist.getNestedShadowRootElement(webDriver, tabRootElement, 20 , 2000);
+        SearchContext clearBrowsingTab = ShadowRootAssist.getNestedShadowRootElement(webDriver, tabRootElement, 20 , 2000);
         int count = 0;
         do {
         	count++;
         	try {
         		WebElement requiredElement = clearBrowsingTab.findElements(By.cssSelector(divTabIdentifier)).iterator().next();
-        		WebDriverWait webDriverWait = new WebDriverWait(webDriver, 10, 1000);
+        		WebDriverWait webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(10) , Duration.ofMillis(1000));
         		webDriverWait.until((ExpectedCondition<Boolean>) wd -> requiredElement.getText().equals("Basic") && requiredElement.isDisplayed() && requiredElement.isEnabled());
         		requiredElement.click();
         		break;
@@ -69,10 +71,10 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
         		/* Retry */
         	}
         } while (count <= 1);
-        WebElement settingsDropdownMenu = ShadowRootAssist.getNestedShadowRootElement(webDriver, settingsDropdownMenuRootElement, 20 , 2000);
+        SearchContext settingsDropdownMenu = ShadowRootAssist.getNestedShadowRootElement(webDriver, settingsDropdownMenuRootElement, 20 , 2000);
         WebElement timeRangeSelect = settingsDropdownMenu.findElement(By.cssSelector(selectTimeRangeIdentifier));
         new Select(timeRangeSelect).selectByVisibleText("Last hour");
-        WebElement clearBrowsingDataDialog = ShadowRootAssist.getNestedShadowRootElement(webDriver, clearBrowsingDataDialogRootElement, 20 , 2000);
+        SearchContext clearBrowsingDataDialog = ShadowRootAssist.getNestedShadowRootElement(webDriver, clearBrowsingDataDialogRootElement, 20 , 2000);
         List<WebElement> basicCheckboxes = clearBrowsingDataDialog.findElements(By.cssSelector(basicTabCheckboxesIdentifier));
         for (WebElement checkbox : basicCheckboxes) {
         	String isCheckboxChecked = checkbox.getAttribute("checked");

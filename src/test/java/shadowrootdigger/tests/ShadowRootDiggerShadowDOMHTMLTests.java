@@ -1,6 +1,7 @@
 package shadowrootdigger.tests;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -23,7 +24,7 @@ public class ShadowRootDiggerShadowDOMHTMLTests extends TestBase {
 	@Test(description = SHADOW_DOM_HTML_TESTS)
 	public void test_getShadowRootElement_ShadowDOMHTML_ShadowRootElementExists() {
          webDriver.navigate().to(getTestFilePath());
-         WebElement shadowHost = ShadowRootAssist.getShadowRootElement(webDriver, shadowHostElement, 20 , 2000);
+         SearchContext shadowHost = ShadowRootAssist.getShadowRootElement(webDriver, shadowHostElement, 20 , 2000);
          Assert.assertNotNull(shadowHost);
          WebElement shadowInput = shadowHost.findElement(By.cssSelector(shadowRootEnclosedInput));
          shadowInput.sendKeys("Input inside Shadow DOM");
@@ -48,7 +49,7 @@ public class ShadowRootDiggerShadowDOMHTMLTests extends TestBase {
 	@Test(description = SHADOW_DOM_HTML_TESTS)
 	public void test_getNestedShadowRootElement_ShadowDOMHTML_RootElementExists() {
 		webDriver.navigate().to(getTestFilePath());
-        WebElement nestedShadowHost = ShadowRootAssist.getNestedShadowRootElement(webDriver, nestedShadowHostElement, 20 , 2000);
+		SearchContext nestedShadowHost = ShadowRootAssist.getNestedShadowRootElement(webDriver, nestedShadowHostElement, 20 , 2000);
         WebElement nestedText = nestedShadowHost.findElement(By.cssSelector(nestedShadowHostShadowContent));
         Assert.assertEquals(nestedText.getText(), "nested text");
 	}
