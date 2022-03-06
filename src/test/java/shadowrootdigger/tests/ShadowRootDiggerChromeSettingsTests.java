@@ -83,13 +83,6 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
     }
 	
 	@Test(description = CHROME_SETTINGS_TESTS)
-	public void test_isShadowRootElementPresent_ChromeSettings_ShadowRootExists() {
-		webDriver.navigate().to("chrome://settings/clearBrowserData");
-		Boolean exists = ShadowRootAssist.isShadowRootElementPresent(webDriver, existsShadowRootElement, false, 20, 2000);
-		Assert.assertEquals(exists, true);
-	}
-	
-	@Test(description = CHROME_SETTINGS_TESTS)
 	public void test_getNestedShadowRootElement_ChromeSettings_RootElementDoesNotExists() {
 		String expectedErrorMessage = "getNestedShadowRootElement: Nested shadow root element for selector 'settings-main.main' in DOM hierarchy 'settings-ui > settings-main.main' Not Found.";
 		webDriver.navigate().to("chrome://settings/clearBrowserData");
@@ -99,6 +92,13 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
 		}
 		catch (AssertionError ex) { throw ex; }
 		catch (WebDriverException ex) { Assert.assertTrue(ex.getMessage().contains(expectedErrorMessage)); }
+	}
+	
+	@Test(description = CHROME_SETTINGS_TESTS)
+	public void test_isShadowRootElementPresent_ChromeSettings_ShadowRootExists() {
+		webDriver.navigate().to("chrome://settings/clearBrowserData");
+		Boolean exists = ShadowRootAssist.isShadowRootElementPresent(webDriver, existsShadowRootElement, false, 20, 2000);
+		Assert.assertEquals(exists, true);
 	}
 	
 	@Test(description = CHROME_SETTINGS_TESTS)
