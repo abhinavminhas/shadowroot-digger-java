@@ -50,6 +50,37 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
     }
 	
 	@Test(description = CHROME_SETTINGS_TESTS)
+	public void test_getShadowRootElement_ChromeSettings_ImplicitWaitManipulationCheck_Exists() {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+        long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to("chrome://settings/clearBrowserData");
+        ShadowRootAssist.getShadowRootElement(webDriver, existsShadowRootElement, 20 , 2000);
+        long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+	}
+	
+	@Test(description = CHROME_SETTINGS_TESTS)
+	public void test_getShadowRootElement_ChromeSettings_ImplicitWaitManipulationCheck_NotExists()
+    {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+        long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to("chrome://settings/clearBrowserData");
+        try
+        {
+            ShadowRootAssist.getShadowRootElement(webDriver, notExistsShadowRootElement, 20 , 2000);
+            Assert.fail("No Exception Thrown.");
+        }
+        catch (AssertionError ex) { throw ex; }
+        catch (WebDriverException ex)
+        {
+        	long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+            Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+        }
+    }
+	
+	@Test(description = CHROME_SETTINGS_TESTS)
 	public void test_getNestedShadowRootElement_ChromeSettings_ClearChromeData()
     {
         webDriver.navigate().to("chrome://settings/clearBrowserData");
@@ -97,6 +128,38 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
 	}
 	
 	@Test(description = CHROME_SETTINGS_TESTS)
+	public void test_getNestedShadowRootElement_ChromeSettings_ImplicitWaitManipulationCheck_Exists()
+    {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+        long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to("chrome://settings/clearBrowserData");
+        ShadowRootAssist.getNestedShadowRootElement(webDriver, tabRootElement, 20 , 2000);
+        long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+    }
+	
+	@Test(description = CHROME_SETTINGS_TESTS)
+	public void test_getNestedShadowRootElement_ChromeSettings_ImplicitWaitManipulationCheck_NotExists()
+    {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+		long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to("chrome://settings/clearBrowserData");
+        try
+        {
+            ShadowRootAssist.getNestedShadowRootElement(webDriver, notExistsNestedShadowRootElement, 20 , 2000);
+            Assert.fail("No Exception Thrown.");
+        }
+        catch (AssertionError ex) { throw ex; }
+        catch (WebDriverException ex)
+        {
+        	long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+            Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+        }
+    }
+	
+	@Test(description = CHROME_SETTINGS_TESTS)
 	public void test_isShadowRootElementPresent_ChromeSettings_ShadowRootExists() {
 		webDriver.navigate().to("chrome://settings/clearBrowserData");
 		Boolean exists = ShadowRootAssist.isShadowRootElementPresent(webDriver, existsShadowRootElement, false, 20, 2000);
@@ -116,6 +179,41 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
         catch (AssertionError ex)  { throw ex; }
         catch (WebDriverException ex) { Assert.assertTrue(ex.getMessage().contains(expectedErrorMessage)); }
 	}
+	
+	@Test(description = CHROME_SETTINGS_TESTS)
+	public void test_isShadowRootElementPresent_ChromeSettings_ImplicitWaitManipulationCheck_Exists()
+    {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+        long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to("chrome://settings/clearBrowserData");
+        ShadowRootAssist.isShadowRootElementPresent(webDriver, existsShadowRootElement, false, 20 , 2000);
+        long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+    }
+	
+	@Test(description = CHROME_SETTINGS_TESTS)
+	public void test_isShadowRootElementPresent_ChromeSettings_ImplicitWaitManipulationCheck_NotExists()
+    {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+		long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+		Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to("chrome://settings/clearBrowserData");
+        ShadowRootAssist.isShadowRootElementPresent(webDriver, notExistsShadowRootElement, false, 20 , 2000);
+        long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+        try
+        {
+            ShadowRootAssist.isShadowRootElementPresent(webDriver, notExistsShadowRootElement, true, 20 , 2000);
+            Assert.fail("No Exception Thrown.");
+        }
+        catch (AssertionError ex) { throw ex; }
+        catch (WebDriverException ex)
+        {
+        	implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+            Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+        }
+    }
 	
 	@Test(description = CHROME_SETTINGS_TESTS)
 	public void test_isNestedShadowRootElementPresent_ChromeSettings_NestedShadowRootExists() {
@@ -142,4 +240,38 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
         catch (WebDriverException ex) { Assert.assertTrue(ex.getMessage().contains(expectedErrorMessage)); }
 	}
 	
+	@Test(description = CHROME_SETTINGS_TESTS)
+	public void test_isNestedShadowRootElementPresent_ChromeSettings_ImplicitWaitManipulationCheck_Exists()
+    {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+        long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to("chrome://settings/clearBrowserData");
+        ShadowRootAssist.isNestedShadowRootElementPresent(webDriver, tabRootElement, false, 20 , 2000);
+        long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+    }
+	
+	@Test(description = CHROME_SETTINGS_TESTS)
+	public void test_isNestedShadowRootElementPresent_ChromeSettings_ImplicitWaitManipulationCheck_NotExists()
+    {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+        long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to("chrome://settings/clearBrowserData");
+        ShadowRootAssist.isNestedShadowRootElementPresent(webDriver, notExistsNestedShadowRootElement, false, 20 , 2000);
+        long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+        try
+        {
+            ShadowRootAssist.isNestedShadowRootElementPresent(webDriver, notExistsNestedShadowRootElement, true, 20 , 2000);
+            Assert.fail("No Exception Thrown.");
+        }
+        catch (AssertionError ex) { throw ex; }
+        catch (WebDriverException ex)
+        {
+        	implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+            Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+        }
+    }
 }
