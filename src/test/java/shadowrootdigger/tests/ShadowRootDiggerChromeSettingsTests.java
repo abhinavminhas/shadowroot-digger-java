@@ -48,8 +48,7 @@ public class ShadowRootDiggerChromeSettingsTests extends TestBase {
     }
 	
 	@Test(description = CHROME_SETTINGS_TESTS)
-	public void test_getNestedShadowRootElement_ChromeSettings_ClearChromeData()
-    {
+	public void test_getNestedShadowRootElement_ChromeSettings_ClearChromeData() {
         webDriver.navigate().to("chrome://settings/clearBrowserData");
         WebElement clearBrowsingTab = ShadowRootAssist.getNestedShadowRootElement(webDriver, tabRootElement, 20 , 2000);
         int count = 0;
