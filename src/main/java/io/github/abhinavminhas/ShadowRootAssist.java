@@ -94,7 +94,7 @@ public class ShadowRootAssist {
         	WebDriverWait webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(timeInSeconds), Duration.ofMillis(pollingIntervalInMilliseconds));
 			webDriverWait.until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor)webDriver).executeScript(shadowRootElement) != null); 
 			Object returnedObject = ((JavascriptExecutor)webDriver).executeScript(shadowRootElement);
-			webDriverWait.until(item -> (SearchContext)returnedObject != null);
+			webDriverWait.until(item -> returnedObject instanceof SearchContext);
 			isPresent = true;
         } catch (WebDriverException ex) {
         	if (throwError)
@@ -131,7 +131,7 @@ public class ShadowRootAssist {
             	WebDriverWait webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(timeInSeconds), Duration.ofMillis(pollingIntervalInMilliseconds));
                 webDriverWait.until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor)webDriver).executeScript(shadowRootElement) != null);
     			Object returnedObject = ((JavascriptExecutor)webDriver).executeScript(shadowRootElement);
-    			webDriverWait.until(item -> (SearchContext)returnedObject != null);
+    			webDriverWait.until(item -> returnedObject instanceof SearchContext);
 				isPresent = true;
             } catch (WebDriverException ex) {
             	if (throwError)
