@@ -9,6 +9,9 @@
 
 One of the important aspect of web components is encapsulation and [Shadow DOM API](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) is a key part of this, allowing hidden DOM trees to be attached to elements in the regular DOM tree. This shadow DOM tree starts with a shadow root, underneath which any elements can be attached, in the same way as the normal DOM. The solution combines the power of [Document Query Selector API](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)  with [Selenium](https://www.selenium.dev/) to grab such shadow root DOM trees and interact with any elements encapsulated within it.
 
+Selenium 4.0.x - Current supported package/solution version.  
+Selenium 3 - Check support [here](https://github.com/abhinavminhas/shadowroot-digger-java/tree/Selenium-3-v1.x.x).  
+
 ## Download
 The package is available and can be downloaded using [Maven Central Repository Search](https://search.maven.org/)/[MVNRepository](https://mvnrepository.com/) package manager.  
 - Package Name (Maven Central Repository Search) - [ShadowRoot.Digger](https://search.maven.org/search?q=a:ShadowRoot.Digger).
@@ -17,7 +20,8 @@ The package is available and can be downloaded using [Maven Central Repository S
 ## Features
 1. Returns shadow root or nested shadow root from DOM.
 2. Checks if shadow root or nested shadow root is present or not in the DOM.  
-   **NOTE:** *Supports Selenium 3 (Check Selenium Dependency Before Use)*
+   **NOTE:** *Supports Selenium 3, 4.0.x (Check Selenium Dependency Before Use)*  
+   &emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;For Selenium 3 - Use versions [1.x.x](https://search.maven.org/artifact/io.github.abhinavminhas/ShadowRoot.Digger/1.0.0/jar).
 
 ## JAVA Supported Versions
 The solution is built on Java 8.
