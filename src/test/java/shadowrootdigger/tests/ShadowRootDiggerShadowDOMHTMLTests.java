@@ -1,6 +1,8 @@
 package shadowrootdigger.tests;
 
+import java.time.Duration;
 import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -23,7 +25,7 @@ public class ShadowRootDiggerShadowDOMHTMLTests extends TestBase {
 	@Test(description = SHADOW_DOM_HTML_TESTS)
 	public void test_getShadowRootElement_ShadowDOMHTML_ShadowRootElementExists() {
          webDriver.navigate().to(getTestFilePath());
-         WebElement shadowHost = ShadowRootAssist.getShadowRootElement(webDriver, shadowHostElement, 20 , 2000);
+         SearchContext shadowHost = ShadowRootAssist.getShadowRootElement(webDriver, shadowHostElement, 20 , 2000);
          Assert.assertNotNull(shadowHost);
          WebElement shadowInput = shadowHost.findElement(By.cssSelector(shadowRootEnclosedInput));
          shadowInput.sendKeys("Input inside Shadow DOM");
@@ -46,9 +48,37 @@ public class ShadowRootDiggerShadowDOMHTMLTests extends TestBase {
 	}
 	
 	@Test(description = SHADOW_DOM_HTML_TESTS)
+	public void test_getShadowRootElement_ShadowDOMHTML_ImplicitWaitManipulationCheck_Exists() {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+		long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to(getTestFilePath());
+        ShadowRootAssist.getShadowRootElement(webDriver, shadowHostElement, 20 , 2000);
+        long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+    }
+	
+	@Test(description = SHADOW_DOM_HTML_TESTS)
+	public void test_getShadowRootElement_ShadowDOMHTML_ImplicitWaitManipulationCheck_NotExists() {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+		long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to(getTestFilePath());
+        try {
+            ShadowRootAssist.getShadowRootElement(webDriver, notExistsShadowHostElement, 20 , 2000);
+            Assert.fail("No Exception Thrown.");
+        }
+        catch (AssertionError ex) { throw ex; }
+        catch (WebDriverException ex) {
+        	long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+            Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+        }
+    }
+	
+	@Test(description = SHADOW_DOM_HTML_TESTS)
 	public void test_getNestedShadowRootElement_ShadowDOMHTML_RootElementExists() {
 		webDriver.navigate().to(getTestFilePath());
-        WebElement nestedShadowHost = ShadowRootAssist.getNestedShadowRootElement(webDriver, nestedShadowHostElement, 20 , 2000);
+		SearchContext nestedShadowHost = ShadowRootAssist.getNestedShadowRootElement(webDriver, nestedShadowHostElement, 20 , 2000);
         WebElement nestedText = nestedShadowHost.findElement(By.cssSelector(nestedShadowHostShadowContent));
         Assert.assertEquals(nestedText.getText(), "nested text");
 	}
@@ -64,6 +94,34 @@ public class ShadowRootDiggerShadowDOMHTMLTests extends TestBase {
         catch (AssertionError ex) { throw ex; }
         catch (WebDriverException ex) { Assert.assertTrue(ex.getMessage().contains(expectedErrorMessage)); }
 	}
+	
+	@Test(description = SHADOW_DOM_HTML_TESTS)
+    public void test_getNestedShadowRootElement_ShadowDOMHTML_ImplicitWaitManipulationCheck_Exists() {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+		long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to(getTestFilePath());
+        ShadowRootAssist.getNestedShadowRootElement(webDriver, nestedShadowHostElement, 20 , 2000);
+        long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+    }
+	
+	@Test(description = SHADOW_DOM_HTML_TESTS)
+	public void test_getNestedShadowRootElement_ShadowDOMHTML_ImplicitWaitManipulationCheck_NotExists() {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+		long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to(getTestFilePath());
+        try {
+            ShadowRootAssist.getNestedShadowRootElement(webDriver, notExistsNestedShadowHostElement, 20 , 2000);
+            Assert.fail("No Exception Thrown.");
+        }
+        catch (AssertionError ex) { throw ex; }
+        catch (WebDriverException ex) {
+        	long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+            Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+        }
+    }
 	
 	@Test(description = SHADOW_DOM_HTML_TESTS)
 	public void test_isShadowRootElementPresent_ShadowDOMHTML_ShadowRootExists() {
@@ -87,6 +145,37 @@ public class ShadowRootDiggerShadowDOMHTMLTests extends TestBase {
 	}
 	
 	@Test(description = SHADOW_DOM_HTML_TESTS)
+	public void test_isShadowRootElementPresent_ShadowDOMHTML_ImplicitWaitManipulationCheck_Exists() {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+		long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to(getTestFilePath());
+        ShadowRootAssist.isShadowRootElementPresent(webDriver, shadowHostElement, false, 20 , 2000);
+        long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+    }
+	
+	@Test(description = SHADOW_DOM_HTML_TESTS)
+	public void test_isShadowRootElementPresent_ShadowDOMHTML_ImplicitWaitManipulationCheck_NotExists() {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+		long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to(getTestFilePath());
+        ShadowRootAssist.isShadowRootElementPresent(webDriver, notExistsShadowHostElement, false, 20 , 2000);
+        long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+        try {
+            ShadowRootAssist.isShadowRootElementPresent(webDriver, notExistsShadowHostElement, true, 20 , 2000);
+            Assert.fail("No Exception Thrown.");
+        }
+        catch (AssertionError ex) { throw ex; }
+        catch (WebDriverException ex) {
+            implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+            Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+        }
+    }
+	
+	@Test(description = SHADOW_DOM_HTML_TESTS)
 	public void test_isNestedShadowRootElementPresent_ShadowDOMHTML_NestedShadowRootExists() {
 		webDriver.navigate().to(getTestFilePath());
         Boolean exists = ShadowRootAssist.isNestedShadowRootElementPresent(webDriver, nestedShadowHostElement, false, 20, 2000);
@@ -106,4 +195,35 @@ public class ShadowRootDiggerShadowDOMHTMLTests extends TestBase {
         catch (AssertionError ex) { throw ex; }
         catch (WebDriverException ex) { Assert.assertTrue(ex.getMessage().contains(expectedErrorMessage)); }
 	}
+	
+	@Test(description = SHADOW_DOM_HTML_TESTS)
+	public void test_isNestedShadowRootElementPresent_ShadowDOMHTML_ImplicitWaitManipulationCheck_Exists() {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+		long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to(getTestFilePath());
+        ShadowRootAssist.isNestedShadowRootElementPresent(webDriver, nestedShadowHostElement, false, 20 , 2000);
+        long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+    }
+	
+	@Test(description = SHADOW_DOM_HTML_TESTS)
+	public void test_isNestedShadowRootElementPresent_ShadowDOMHTML_ImplicitWaitManipulationCheck_NotExists() {
+		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+		long implicitWaitBefore = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, 0);
+        webDriver.navigate().to(getTestFilePath());
+        ShadowRootAssist.isNestedShadowRootElementPresent(webDriver, notExistsNestedShadowHostElement, false, 20 , 2000);
+        long implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+        Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+        try {
+            ShadowRootAssist.isNestedShadowRootElementPresent(webDriver, notExistsNestedShadowHostElement, true, 20 , 2000);
+            Assert.fail("No Exception Thrown.");
+        }
+        catch (AssertionError ex) { throw ex; }
+        catch (WebDriverException ex) {
+            implicitWaitAfter = webDriver.manage().timeouts().getImplicitWaitTimeout().toMillis();
+            Assert.assertEquals(implicitWaitBefore, implicitWaitAfter);
+        }
+    }
 }
