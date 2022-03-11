@@ -21,3 +21,10 @@ All notable changes to this project documented here.
 
 ### Notes
 - This version supports change in shadow root return values for Selenium in Chromium browsers (Google Chrome and Microsoft Edge) v96 and is backward compatible.
+
+## [2.0.1](https://search.maven.org/artifact/io.github.abhinavminhas/ShadowRoot.Digger/2.0.1/jar) - 2021-03-12
+### Changed
+- Bumped Selenium version from '4.0.0' to '4.1.0'.
+
+### Notes
+- This version supports change in shadow root return values for Selenium in Chromium browsers (Google Chrome and Microsoft Edge) v96 and is backward compatible.
