@@ -21,7 +21,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class TestBase {
 
 	protected WebDriver webDriver;
-	private String chromeDriverVersion = "98.0.4758.102";
+	private String chromeDriverVersion = "99.0.4844.51";
 	protected static final String CHROME_SETTINGS_TESTS = "CHROME-SETTINGS-TESTS";
 	protected static final String SHADOW_DOM_HTML_TESTS = "SHADOW-DOM-HTML-TESTS";
 	protected static Properties config;
