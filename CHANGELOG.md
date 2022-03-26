@@ -3,7 +3,7 @@ All notable changes to this project documented here.
 
 ## [Released]
 
-## [1.0.0](https://mvnrepository.com/artifact/io.github.abhinavminhas/ShadowRoot.Digger/1.0.0) - 2022-02-22
+## [1.0.0](https://search.maven.org/artifact/io.github.abhinavminhas/ShadowRoot.Digger/1.0.0/jar) - 2022-02-22
 ### Added
 - Shadow root digger implementation.
   - ShadowRootAssist.getShadowRootElement()
