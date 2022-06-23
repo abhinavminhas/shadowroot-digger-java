@@ -3,6 +3,7 @@ package io.github.abhinavminhas;
 import java.time.Duration;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -12,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * 'ShadowRootAssist' class to support digging of shadow roots in DOM.
  * 
  * @author 	Abhinav Minhas
- * @version 2.0.4
+ * @version 2.1.0
  * @since 	01-01-2022
  */
 public class ShadowRootAssist {
@@ -33,6 +34,7 @@ public class ShadowRootAssist {
  		String shadowRootElement = String.format(shadowRootQuerySelector, shadowRootSelector);
 		try {
 			WebDriverWait webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(timeInSeconds), Duration.ofMillis(pollingIntervalInMilliseconds));
+			webDriverWait.ignoring(StaleElementReferenceException.class);
 			webDriverWait.until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor)webDriver).executeScript(shadowRootElement) != null);
 			Object returnedObject = ((JavascriptExecutor)webDriver).executeScript(shadowRootElement);
 			requiredShadowRoot = (SearchContext)returnedObject;
@@ -65,6 +67,7 @@ public class ShadowRootAssist {
             String shadowRootElement = String.format(documentReturn, shadowRootQueryString);
             try {
             	WebDriverWait webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(timeInSeconds), Duration.ofMillis(pollingIntervalInMilliseconds));
+            	webDriverWait.ignoring(StaleElementReferenceException.class);
                 webDriverWait.until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor)webDriver).executeScript(shadowRootElement) != null);
     			Object returnedObject = ((JavascriptExecutor)webDriver).executeScript(shadowRootElement);
     			requiredShadowRoot = (SearchContext)returnedObject;
@@ -92,6 +95,7 @@ public class ShadowRootAssist {
 		String shadowRootElement = String.format(shadowRootQuerySelector, shadowRootSelector);
         try {
         	WebDriverWait webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(timeInSeconds), Duration.ofMillis(pollingIntervalInMilliseconds));
+        	webDriverWait.ignoring(StaleElementReferenceException.class);
 			webDriverWait.until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor)webDriver).executeScript(shadowRootElement) != null); 
 			Object returnedObject = ((JavascriptExecutor)webDriver).executeScript(shadowRootElement);
 			webDriverWait.until(item -> returnedObject instanceof SearchContext);
@@ -129,6 +133,7 @@ public class ShadowRootAssist {
             String shadowRootElement = String.format(documentReturn, shadowRootQueryString);
             try {
             	WebDriverWait webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(timeInSeconds), Duration.ofMillis(pollingIntervalInMilliseconds));
+            	webDriverWait.ignoring(StaleElementReferenceException.class);
                 webDriverWait.until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor)webDriver).executeScript(shadowRootElement) != null);
     			Object returnedObject = ((JavascriptExecutor)webDriver).executeScript(shadowRootElement);
     			webDriverWait.until(item -> returnedObject instanceof SearchContext);
