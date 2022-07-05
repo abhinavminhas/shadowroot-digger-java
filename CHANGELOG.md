@@ -3,8 +3,12 @@ All notable changes to this project documented here.
 
 ## [Released]
 
-## [2.1.0](https://search.maven.org/artifact/io.github.abhinavminhas/ShadowRoot.Digger/2.1.0/jar) - 2022-06-28
+## [2.1.1](https://search.maven.org/artifact/io.github.abhinavminhas/ShadowRoot.Digger/2.1.1/jar) - 2022-07-05
 ### Changed
+- Bumped Selenium version from '4.1.3' to '4.1.4'.
+
+## [2.1.0](https://search.maven.org/artifact/io.github.abhinavminhas/ShadowRoot.Digger/2.1.0/jar) - 2022-06-28
+### Added
 - Addition of 'StaleElementReferenceException' handler.
 
 ## [2.0.4](https://search.maven.org/artifact/io.github.abhinavminhas/ShadowRoot.Digger/2.0.4/jar) - 2022-04-18
