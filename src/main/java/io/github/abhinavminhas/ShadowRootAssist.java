@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * 'ShadowRootAssist' class to support digging of shadow roots in DOM.
  * 
  * @author 	Abhinav Minhas
- * @version 2.1.9
+ * @version 2.1.10
  * @since 	01-01-2022
  */
 public class ShadowRootAssist {
