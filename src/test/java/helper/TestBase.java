@@ -51,6 +51,7 @@ public class TestBase {
 		ChromeOptions chromeOptions = new ChromeOptions();
 		chromeOptions.addArguments("--disable-notifications");
 		chromeOptions.addArguments("--no-sandbox");
+		chromeOptions.addArguments("--remote-allow-origins=*");
 		Boolean sessionCreated = false;
 		do {
 			retry++;
