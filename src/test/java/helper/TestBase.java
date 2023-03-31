@@ -21,7 +21,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class TestBase {
 
 	protected WebDriver webDriver;
-	private String chromeDriverVersion = "107.0.5304.62";
+	private String chromeDriverVersion = "111.0.5563.64";
 	protected static final String CHROME_SETTINGS_TESTS = "CHROME-SETTINGS-TESTS";
 	protected static final String SHADOW_DOM_HTML_TESTS = "SHADOW-DOM-HTML-TESTS";
 	protected static Properties config;
@@ -51,6 +51,7 @@ public class TestBase {
 		ChromeOptions chromeOptions = new ChromeOptions();
 		chromeOptions.addArguments("--disable-notifications");
 		chromeOptions.addArguments("--no-sandbox");
+		chromeOptions.addArguments("--remote-allow-origins=*");
 		Boolean sessionCreated = false;
 		do {
 			retry++;
