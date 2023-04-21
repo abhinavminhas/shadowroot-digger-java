@@ -3,6 +3,10 @@ All notable changes to this project documented here.
 
 ## [Released]
 
+## [2.1.17](https://search.maven.org/artifact/io.github.abhinavminhas/ShadowRoot.Digger/2.1.17/jar) - 2023-04-21
+### Changed
+- Bumped Selenium version from '4.8.1' to '4.8.2'.
+
 ## [2.1.16](https://search.maven.org/artifact/io.github.abhinavminhas/ShadowRoot.Digger/2.1.16/jar) - 2023-04-20
 ### Changed
 - Bumped Selenium version from '4.8.0' to '4.8.1'.
