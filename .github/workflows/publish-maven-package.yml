@@ -1,7 +1,7 @@
 name: Publish Maven Package
 
 env:
-    MAVEN_PACKAGE_VERSION: "2.1.19"
+    MAVEN_PACKAGE_VERSION: "2.1.20"
 
 on:
   workflow_dispatch:
